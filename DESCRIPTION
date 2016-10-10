@@ -1,7 +1,7 @@
 Package: myTAI
 Type: Package
 Title: Perform Evolutionary Transcriptomics Studies
-Version: 0.4.1
+Version: 0.4.0
 Date: 2015-07-22
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
