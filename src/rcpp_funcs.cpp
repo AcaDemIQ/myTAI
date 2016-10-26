@@ -51,7 +51,7 @@ NumericVector permut(NumericVector a)
 		      divisor  += ExpressionSet(gene, stage);
 	       }
 
-	       results[stage] = divisor/numerator;
+	       results[stage] = numerator / divisor;
     }
     
     return results;
