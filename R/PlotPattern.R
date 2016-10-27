@@ -170,11 +170,11 @@ PlotPattern <- function(ExpressionSet,
                 graphics::axis(1,1:(ncol(ExpressionSet)-2),names(ExpressionSet)[3:ncol(ExpressionSet)])
         } else {
         
-        if (!(is.element(TestStatistic, c("FlatLineTest","ReductiveHourglassTest","EarlyConservationTest")))){
+        if (!(is.element(TestStatistic, c("FlatLineTest","ReductiveHourglassTest","EarlyConservationTest", "ReductiveHourglassInvertTest")))){
                 stop("Please enter a correct string for the test statistic: 'FlatLineTest', 'EarlyConservationTest' or 'ReductiveHourglassTest'.")
         }
         
-        if ((is.element(TestStatistic,c("ReductiveHourglassTest","EarlyConservationTest"))) & is.null(modules))
+        if ((is.element(TestStatistic,c("ReductiveHourglassTest","EarlyConservationTest","ReductiveHourglassInvertTest"))) & is.null(modules))
                 stop ("Please specify the modules for the ReductiveHourglassTest or EarlyConservationTest: modules = list(early = ..., mid = ..., late = ...).")
         
         if ((!is.null(modules)) & (TestStatistic == "FlatLineTest"))
@@ -237,6 +237,43 @@ PlotPattern <- function(ExpressionSet,
                                                                    custom.perm.matrix = custom.perm.matrix)
                         }
                 }
+        }
+        
+        if (TestStatistic == "ReductiveHourglassInvertTest"){
+          
+          if (lillie.test){
+            
+            if (is.null(custom.perm.matrix)){
+              resList <- ReductiveHourglassInvertTest( ExpressionSet = ExpressionSet,
+                                                 modules       = modules, 
+                                                 permutations  = permutations, 
+                                                 lillie.test   = TRUE )
+            }
+            
+            else if (!is.null(custom.perm.matrix)){
+              resList <- ReductiveHourglassInvertTest( ExpressionSet      = ExpressionSet,
+                                                 modules            = modules, 
+                                                 lillie.test        = TRUE,
+                                                 custom.perm.matrix = custom.perm.matrix)
+            }
+          }
+          
+          if(!lillie.test){
+            
+            if (is.null(custom.perm.matrix)){
+              resList <- ReductiveHourglassInvertTest( ExpressionSet = ExpressionSet,
+                                                 modules       = modules, 
+                                                 permutations  = permutations, 
+                                                 lillie.test   = FALSE )
+            }
+            
+            else if (!is.null(custom.perm.matrix)){
+              resList <- ReductiveHourglassInvertTest( ExpressionSet      = ExpressionSet,
+                                                 modules            = modules, 
+                                                 lillie.test        = FALSE,
+                                                 custom.perm.matrix = custom.perm.matrix)
+            }
+          }
         }
         
         if(TestStatistic == "EarlyConservationTest"){
@@ -340,6 +377,11 @@ PlotPattern <- function(ExpressionSet,
                         do.call(graphics::legend,c(list(x = "topleft",bty = "n",legend = paste("p_rht = ",format(pval,digits = 3),sep = ""),
                                                    dots[!is.element(names(dots),c(plot.args,axis.args))])))
                 }
+          
+          if(TestStatistic == "ReductiveHourglassInvertTest"){
+            do.call(graphics::legend,c(list(x = "topleft",bty = "n",legend = paste("p_rhit = ",format(pval,digits = 3),sep = ""),
+                                            dots[!is.element(names(dots),c(plot.args,axis.args))])))
+          }
                 
                 if(TestStatistic == "EarlyConservationTest"){
                         do.call(graphics::legend,c(list(x = "topleft",bty = "n",legend = paste("p_ect = ",format(pval,digits = 3),sep = ""),
