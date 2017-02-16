@@ -172,7 +172,7 @@ ReductiveHourglassInvertTest <- function(ExpressionSet,
         }
         
         ### compute the global phylotranscriptomics destruction scores foe each sampled age vector
-        score_vector <- apply(resMatrix, 1 ,rhScore,early = modules[[1]],mid = modules[[2]],late = modules[[3]],method = "min",scoringMethod = "mean-mean")
+        score_vector <- apply(resMatrix, 1 ,rhInvertScore,early = modules[[1]],mid = modules[[2]],late = modules[[3]],method = "min",scoringMethod = "mean-mean")
         
         
         
